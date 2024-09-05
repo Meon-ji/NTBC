@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail</title>
+</head>
+<body>
+    <div class="details">
+        {{todo.title}}<br>
+        {{todo.text}}<br>
+        {{todo.start_time}}<br>
+        {{todo.end_time}}<br>
+        <button type="button" class="delete_btn" onclick="delete_todo()">delete</button>
+        <button type="button" class="update_btn" onclick="update_todo()">update</button>
+    </div>
+</body>
+</html>
+<script>
+    function delete_todo(){
+        var res = confirm('정말로 삭제하시겠습니까?');
+        if(res){
+            window.location.href = "{% url 'delete' todo.id %}"
+            alert("삭제했습니다.");
+        }
+    }
+    function update_todo(){
+        window.location.href = "{% url 'update' %}?title={{todo.title}}"
+    }
+</script>

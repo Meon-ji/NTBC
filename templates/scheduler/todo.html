@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/todo.css' %}">
+    <title>todo</title>
+</head>
+<body>
+    <div class="container">
+        <form action="{% url 'create' %}" method="post">
+            {% csrf_token %}
+            <div class="nav-form">
+                <br>
+                <label for="title">Title </label><br>
+                <input type="text" name="title" id="title" placeholder="title"><br><br>
+                <label for="text">Memo</label><br>
+                <input type="textarea" name="text" id="text" placeholder="memo"><br><br>
+                <label for="start_time">Start time </label><br>
+                <input type="datetime-local" name="start_time" id="start_time"><br><br>
+                <label for="end_time">End time </label><br>
+                <input type="datetime-local" name="end_time" id="end_time"><br>
+                <p id="submitButton"><button type="submit" class="submit_btn btn-5">submit</button></p>
+            </div>
+          </form>
+    </div>
+      <script>
+        // URL에서 날짜 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const dateParam = urlParams.get('date');
+
+        if (dateParam) {
+            // 'YYYY-MM-DD' 형식의 날짜를 'YYYY-MM-DDTHH:MM' 형식으로 변환
+            const startDate = new Date(dateParam);
+            const formattedDate = startDate.toISOString().slice(0, 16);
+            document.getElementById('start_time').value = formattedDate;
+            document.getElementById('end_time').value = formattedDate;
+        }
+
+        document.querySelectorAll('button').forEach(button => button.innerHTML = '<div><span>' + button.textContent.trim().split('').join('</span><span>') + '</span></div>');
+    </script>
+</body>
+</html>

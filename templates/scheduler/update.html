@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'update' %}?title={{todo.title}}" method="post">
+        {% csrf_token %}
+        <label for="title">title </label>
+        <input type="text" name="title" id="update_title" value="{{todo.title}}"><br>
+        <label for="text">text </label>
+        <input type="text" name="text" id="update_text" value="{{todo.text}}"><br>
+        <label for="start_time">Start Time:</label><br>
+        <input type="datetime-local" id="start_time" name="start_time" value="{{ todo.start_time|date:"Y-m-d\TH:i" }}"><br>
+        <label for="end_time">End Time:</label><br>
+        <input type="datetime-local" id="end_time" name="end_time" value="{{ todo.end_time|date:"Y-m-d\TH:i" }}"><br>
+        <p id="submitButton"><input type="submit" value="submit"></p><br>
+      </form>
+</body>
+</html>

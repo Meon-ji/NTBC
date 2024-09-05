@@ -1,0 +1,123 @@
+body{
+    background-color: lightgray;
+}
+
+.nav-form{
+    background-color: white;
+    padding: 5rem;
+    border-width: 5px;
+    border-color: black;
+    border-style: dotted;
+    border-radius: 25px;
+}
+
+.container{
+    font-family: 'BenchNine', Arial, sans-serif;
+    padding: 3rem;
+    font-size: 1.5rem;
+    margin: 25px;
+    min-height: 83dvh;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+#submitButton {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit_btn {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    outline: none;
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid #000;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn-5 {
+  background: #000;
+  color: #fff;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  position: relative;
+}
+
+.btn-5:hover {
+    background: transparent;
+    color: #000;
+     box-shadow:
+     -7px -7px 20px 0px #fff9,
+     -4px -4px 5px 0px #fff9,
+     7px 7px 20px 0px #0002,
+     4px 4px 5px 0px #0001;
+}
+
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #000;
+  transition:400ms ease all;
+}
+
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+label{
+    font-size: 23px;
+}
+
+input[type=text]{
+    width: 15rem;
+    height: 2rem;
+    border-radius: 10px;
+}
+
+input[type=textarea]{
+    width: 15rem;
+    height: 2rem;
+    border-radius: 10px;
+    outline: none;
+    background: transparent;
+}
+
+input::placeholder{
+    font-style: italic;
+    text-align: center;
+    font-size: 16px;
+}
+
+input[type=datetime-local]{
+    width: 15rem;
+    height: 2rem;
+    border-radius: 10px;
+    text-align: center;
+}

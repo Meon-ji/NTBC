@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <title>My Calendar</title>
+</head>
+<body>
+  <!-- <button type="button" id="todo_btn" class="snip1535" onClick="location.href='/todo'">일정 추가</button> -->
+  <div class="calendar">
+    <div class="header">
+      <div class="year-month"></div>
+      <div class="nav">
+        <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+        <button class="nav-btn go-today" onclick="goToday()">Today</button>
+        <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="days">
+        <div class="day">일</div>
+        <div class="day">월</div>
+        <div class="day">화</div>
+        <div class="day">수</div>
+        <div class="day">목</div>
+        <div class="day">금</div>
+        <div class="day">토</div>
+      </div>
+      <div class="dates">
+      </div>
+    </div>
+    <div id="pop_info_1" class="pop_wrap" style="display:none;">
+      <div class="pop_inner">
+        <button type="button" class="btn_close x_btn">×</button>
+        <div class="container">
+          <form action="{% url 'create' %}" method="post">
+              {% csrf_token %}
+              <div class="nav-form">
+                  <br>
+                  <label for="title">Title </label><br>
+                  <input type="text" name="title" id="title" placeholder="title"><br>
+                  <label for="text">Memo</label><br>
+                  <input type="textarea" name="text" id="text" placeholder="memo"><br>
+                  <label for="start_time">Start time </label><br>
+                  <input type="datetime-local" name="start_time" id="start_time" value=""><br>
+                  <label for="end_time">End time </label><br>
+                  <input type="datetime-local" name="end_time" id="end_time" value=""><br>
+                  <p id="submitButton"><button type="submit" class="submit_btn btn-5 btn_close">submit</button></p>
+              </div>
+            </form>
+      </div>
+      </div>
+    </div>
+    <div id="pop_info_2" class="pop_wrap" style="display:none;">
+      <div class="pop_inner">
+        <button type="button" class="btn_close x_btn">×</button>
+        <div class="details"></div>
+        <button type="button" class="delete_btn" onclick="delete_todo()">delete</button>
+        <button type="button" class="update_btn" data-title="{{ todo.title }}" data-start-time="{{ todo.start_time }}" data-end-time="{{ todo.end_time }} onclick="update_todo()">update</button><br>
+      </div>
+    </div>
+    <div id="pop_info_3" class="pop_wrap" style="display:none;">
+      <div class="pop_inner">
+        <button type="button" class="btn_close x_btn">←</button>
+        <div class="container">
+          <form id="update_form" method="post">
+            {% csrf_token %}
+            <div class="nav-form">
+              <br>
+              <label for="title">Title </label><br>
+              <input type="text" name="title" id="update_title"><br>
+              <label for="text">Text </label><br>
+              <input type="text" name="text" id="update_text"><br>
+              <label for="start_time">Start Time:</label><br>
+              <input type="datetime-local" id="update_start_time" name="start_time"><br>
+              <label for="end_time">End Time:</label><br>
+              <input type="datetime-local" id="update_end_time" name="end_time"><br>
+              <p id="submitButton"><button type="submit" class="submit_btn btn-5 btn_close">submit</button></p>
+            </div>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+     const todos = JSON.parse('{{ todos|escapejs }}');
+  </script>
+  <script src="{% static 'js/main.js' %}">
+  </script>
+  <script>
+    function delete_todo(){
+        var res = confirm('정말로 삭제하시겠습니까?');
+        if(res){
+          const todoTitle = document.querySelector('#detail_title').textContent.split(': ')[1];
+          const deleteUrl = `/delete/?title=${encodeURIComponent(todoTitle)}`; // Adjust URL pattern as needed
+          window.location.href = deleteUrl;
+          alert("삭제했습니다.");
+        }
+    }
+    function update_todo(){
+      const todoTitle = document.querySelector('#detail_title').textContent.split(': ')[1];
+      const updateUrl = `/update/?title=${encodeURIComponent(todoTitle)}`; // Adjust URL pattern as needed
+      window.location.href=updateUrl;
+    }
+    // 날짜 클릭 이벤트 핸들러 추가
+    // document.querySelector('.dates').addEventListener('click', function(event) {
+    //   if (event.target.classList.contains('this')) {
+    //     const clickedDate = event.target.textContent.trim();
+    //     const viewYearMonth = document.querySelector('.year-month').textContent.split(' ');
+    //     const viewYear = viewYearMonth[0].slice(0, -1);  // '2024년'에서 '2024' 추출
+    //     const viewMonth = viewYearMonth[1].slice(0, -1).padStart(2, '0');  // '7월'에서 '07' 추출
+
+    //     const fullDate = `${viewYear}-${viewMonth}-${clickedDate.padStart(2, '0')}`;
+    //     window.location.href = `/todo?date=${fullDate}`;
+    //   }
+    // });
+
+    // var target = document.querySelectorAll('.btn_open'); // 클릭할 버튼요소를 변수 처리
+    // var targetID;
+
+    // // 팝업 열기
+    // for(var i = 0; i < target.length; i++){
+    //   target[i].addEventListener('click', function(){
+    //     targetID = this.getAttribute('href');
+    //     document.querySelector(targetID).style.display = 'block';
+    //   });
+    // }
+
+    // //팝업 닫기
+    // for(var j = 0; j < target.length; j++){
+    //   btnPopClose[j].addEventListener('click', function(){
+    //     this.parentNode.parentNode.style.display = 'none';
+    //   });
+    // }
+  </script>
+</body>
+</html>
